@@ -89,10 +89,10 @@ import concurrent.futures as future
 def sphere_volume_parallel1(n,d,np=10):
     
     with future.ProcessPoolExecutor(max_workers= np) as ex:
-        #futures = [ex.submit(sphere_volume, n, d) for _ in range(np)]
+        futures = [ex.submit(sphere_volume, n, d) for _ in range(np)]
         #r = futures.result()
-        result = ex.map(sphere_volume(n, d), [i for i in range(np)])
-            #[i.result() for i in futures] #konstigt
+        #result = ex.map(sphere_volume(n, d), [i for i in range(np)])
+        result = [i.result() for i in futures] #konstigt
     
     return sum(result)/len(result)
 
@@ -206,3 +206,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
